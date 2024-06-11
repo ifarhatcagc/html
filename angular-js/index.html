@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular JS</title>
+  </head>
+  <body
+    ng-app="myApp"
+    ng-init="a=10; b=15; fName='John'; lName='Cena'; evenArr=[2,4, 6]; numsArr=[1,2,3,4,5,6,7,8,9];"
+  >
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <script src="app.js"></script>
+    <h1>Directives</h1>
+    <h2>ng-init: used to initialize AngularJS app data</h2>
+    <hr />
+    <p>
+      The area of the rectangle with sides {{ a }} and {{ b }} = {{ a * b }}
+    </p>
+
+    <br />
+
+    <h2>ng-bind</h2>
+    <hr />
+    <p>
+      The area of the rectangle with sides {{ a }} and {{ b }} =
+      <span ng-bind="a*b"></span>
+    </p>
+
+    <p>
+      The first name is {{fName}} and last name is {{lName}}. <br />
+      <strong>Full Name (using experession):</strong>
+      <span>{{fName + " " + lName}}</span>
+      <br />
+      <strong>Full Name (using ng-bind):</strong>
+      <span ng-bind="fName + ' ' + lName"></span>
+    </p>
+
+    <p>Even no in the array at 3rd index: {{evenArr[2]}}</p>
+
+    <p>
+      Even no in the array at 1st index (using ng-bind):
+      <span ng-bind="evenArr[0]"></span>
+    </p>
+
+    <div>
+      <p><strong>Print all nos of the numsArr (using ng-repeat):</strong></p>
+      <p ng-repeat="num in numsArr">Number is {{num}}</p>
+    </div>
+
+    <br />
+    <h2>ng-controller:</h2>
+    <p ng-controller="myController">
+      The name from the controller: {{name}}, age = {{age}} years
+    </p>
+
+    <p ng-controller="myController">
+      The name from the controller (use ng-bind):
+      <span ng-bind="name+', age = '+age"></span>
+    </p>
+
+    <br />
+
+    <h2>ng-show, ng-hide</h2>
+    <hr />
+    <div ng-controller="myController">
+      <p ng-hide="isSpy">Full Name: {{fullName()}}</p>
+      <p ng-hide="isSpy">Age: {{age}}</p>
+      <p ng-show="isSpy">Codename: {{codeName}}</p>
+    </div>
+
+    <br />
+    <h2>filters</h2>
+    <hr />
+    <div ng-controller="employeeController">
+      <div ng-repeat="employee in employees | orderBy: '-salary' | limitTo: 2 ">
+        <p>First Name: {{employee.fName | uppercase}}</p>
+        <p>
+          First Name (limite to 3 chars + uppercase ): {{employee.fName |
+          uppercase | limitTo: 3}}
+        </p>
+        <p>Last Name: {{employee.lName | lowercase}}</p>
+        <p>Salary: {{employee.salary | currency}}</p>
+        <br />
+      </div>
+    </div>
+
+    <br />
+    <h2>ng-click</h2>
+    <hr />
+    <div ng-controller="ngClickController">
+      <button ng-click="count = count + 1; toggleShow()">
+        Click to +1 the count
+      </button>
+      <p ng-show="show">Count is {{count}}</p>
+    </div>
+
+    <br />
+    <h2>ng-model</h2>
+    <hr />
+
+    <div ng-controller="formController">
+      <h3>Reviews</h3>
+      <div ng-repeat="review in reviews">
+        <div style="background-color: #eeeeee">
+          <p>{{review.comment}} by <strong>{{review.author}}</strong></p>
+        </div>
+      </div>
+
+      <form ng-submit="reviewForm.$valid && addReview()" name="reviewForm" novalidate>
+        <p>Comment being typed: {{form.comment}}</p>
+        <p>Author: {{form.author}}</p>
+
+        <label for="comment">Comment</label>
+        <br />
+        <textarea
+          ng-model="form.comment"
+          id="comment"
+          name="comment"
+          cols="120"
+          rows="5"
+          required
+        ></textarea>
+        <br />
+        <label for="author">Author</label>
+        <br />
+        <input
+          ng-model="form.author"
+          type="text"
+          name="author"
+          id="author"
+          size="50"
+          required
+        />
+        <br />
+        <br />
+        <input type="submit" value="Add Review" />
+        <br />
+        <p>Form Valid ? {{reviewForm.$valid}}</p>
+      </form>
+    </div>
+  </body>
+</html>
